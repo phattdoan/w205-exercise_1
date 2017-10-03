@@ -35,9 +35,17 @@ Setting up environment:
 	   	- /data/spark15/bin/spark0sql
 
 . Get the dataset:
-	h. Download the two datasets using wget. Type:
-   		- wget https://s3.amazonaws.com/ucbdatasciencew205/lab_datasets/userdata_lab.csv
-   		- wget https://s3.amazonaws.com/ucbdatasciencew205/lab_datasets/weblog_lab.csv
+
+. Tables:
+	. General Hospital Information
+	. "Timeline and Effective Care - Hospital.csv" - procedure data
+	. "Readmissions and Deaths - Hospital.csv" - procedure data
+	. "Measure Dates.csv" - mapping of measures to codes
+	. "hvbp_hca_hps_05_28_2015.csv" - survey response data
+	. "COMPLICATIONS-HOSPITAL.csv" - complications
+	. "HEALTHCARE ASSOCIATED INFECTIONS-HOSPITALS.csv"
+	. "PAYMENT-HOSPITAL.csv" - payment and value of care
+	. "MEDICARE HOSPITAL SPENDING PER PATIENT-HOSPITAL.csv" - medicare spending per beneficiary
 
 . Clean files and remove first lines4
 
