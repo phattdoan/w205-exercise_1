@@ -32,7 +32,7 @@ Setting up environment:
 	   . Start Postgres: `/data/start_postgres.sh`
 	   . Start Hive metastore
 	   	- /data/start_metastore.sh
-	   	- /data/spark15/bin/spark0sql
+	   	- /data/spark15/bin/spark-sql
 
 . Get the dataset:
 
