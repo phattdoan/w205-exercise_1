@@ -21,61 +21,56 @@ unzip medicare_data.zip
 
 # create hdfs directory
 hdfs dfs -mkdir /user/w205/hospital_compare
+hdfs dfs -mkdir /user/w205/hospital_compare/hospitals
+hdfs dfs -mkdir /user/w205/hospital_compare/complications
+hdfs dfs -mkdir /user/w205/hospital_compare/hais
+hdfs dfs -mkdir /user/w205/hospital_compare/returns
+hdfs dfs -mkdir /user/w205/hospital_compare/care
+hdfs dfs -mkdir /user/w205/hospital_compare/measures
+hdfs dfs -mkdir /user/w205/hospital_compare/surveys
 
 #-- Hospital Information
 OLD_FILE = "Hospital General Informcation.csv"
 NEW_FILE = "hospitals.csv"
 tail -n +2 "$OLD_FILE" > $NEW_FILE
-hdfs dfs -put $NEW_FILE /user/w205/hospital_compare
-
-#-- 
-#"Timeline and Effective Care - Hospital.csv" - procedure data
-OLD_FILE = "Hospital General Informcation.csv"
-NEW_FILE = "hospitals.csv"
-tail -n +2 "$OLD_FILE" > $NEW_FILE
-hdfs dfs -put $NEW_FILE /user/w205/hospital_compare
-
-#"Readmissions and Deaths - Hospital.csv" - procedure data
-OLD_FILE = "Hospital General Informcation.csv"
-NEW_FILE = "hospitals.csv"
-tail -n +2 "$OLD_FILE" > $NEW_FILE
-hdfs dfs -put $NEW_FILE /user/w205/hospital_compare
-
-#"Measure Dates.csv" - mapping of measures to codes
-OLD_FILE = "Hospital General Informcation.csv"
-NEW_FILE = "hospitals.csv"
-tail -n +2 "$OLD_FILE" > $NEW_FILE
-hdfs dfs -put $NEW_FILE /user/w205/hospital_compare
-
-#"hvbp_hca_hps_05_28_2015.csv" - survey response data
-OLD_FILE = "Hospital General Informcation.csv"
-NEW_FILE = "hospitals.csv"
-tail -n +2 "$OLD_FILE" > $NEW_FILE
-hdfs dfs -put $NEW_FILE /user/w205/hospital_compare
+hdfs dfs -put $NEW_FILE /user/w205/hospital_compare/hospitals
 
 #"COMPLICATIONS-HOSPITAL.csv" - complications
-OLD_FILE = "Hospital General Informcation.csv"
-NEW_FILE = "hospitals.csv"
+OLD_FILE = "Complications and Deaths – Hospital.csv"
+NEW_FILE = "complications.csv"
 tail -n +2 "$OLD_FILE" > $NEW_FILE
-hdfs dfs -put $NEW_FILE /user/w205/hospital_compare
+hdfs dfs -put $NEW_FILE /user/w205/hospital_compare/complications
 
 #"HEALTHCARE ASSOCIATED INFECTIONS-HOSPITALS.csv"
-OLD_FILE = "Hospital General Informcation.csv"
-NEW_FILE = "hospitals.csv"
+OLD_FILE = "Healthcare Associated Infections - Hospital.csv"
+NEW_FILE = "hais.csv"
 tail -n +2 "$OLD_FILE" > $NEW_FILE
-hdfs dfs -put $NEW_FILE /user/w205/hospital_compare
+hdfs dfs -put $NEW_FILE /user/w205/hospital_compare/hais
 
-#"PAYMENT-HOSPITAL.csv" - payment and value of care
-OLD_FILE = "Hospital General Informcation.csv"
-NEW_FILE = "hospitals.csv"
+#"Readmissions and Deaths - Hospital.csv" - procedure data
+OLD_FILE = "Hospital Returns – Hospital.csv"
+NEW_FILE = "returns.csv"
 tail -n +2 "$OLD_FILE" > $NEW_FILE
-hdfs dfs -put $NEW_FILE /user/w205/hospital_compare
+hdfs dfs -put $NEW_FILE /user/w205/hospital_compare/returns
 
-#"MEDICARE HOSPITAL SPENDING PER PATIENT-HOSPITAL.csv" - medicare spending 
-OLD_FILE = "Hospital General Informcation.csv"
-NEW_FILE = "hospitals.csv"
+
+#"Timeline and Effective Care - Hospital.csv" - procedure data
+OLD_FILE = "Timely and Effective Care - Hospital.csv"
+NEW_FILE = "care.csv"
 tail -n +2 "$OLD_FILE" > $NEW_FILE
-hdfs dfs -put $NEW_FILE /user/w205/hospital_compare
+hdfs dfs -put $NEW_FILE /user/w205/hospital_compare/care
+
+#"Measure Dates.csv" - mapping of measures to codes
+OLD_FILE = "Measure Dates.csv"
+NEW_FILE = "measures.csv"
+tail -n +2 "$OLD_FILE" > $NEW_FILE
+hdfs dfs -put $NEW_FILE /user/w205/hospital_compare/measures
+
+#"hvbp_hca_hps_05_28_2015.csv" - survey response data
+OLD_FILE = "hvbp_hcahps_11_10_2016.csv"
+NEW_FILE = "surveys.csv"
+tail -n +2 "$OLD_FILE" > $NEW_FILE
+hdfs dfs -put $NEW_FILE /user/w205/hospital_compare/surveys
 
 # change directory back to the original
 cd $MY_CWD
