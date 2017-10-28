@@ -27,7 +27,7 @@ hdfs dfs -rmdir /user/w205/hospital_compare/measures
 hdfs dfs -rm /user/w205/hospital_compare/surveys/surveys.csv
 hdfs dfs -rmdir /user/w205/hospital_compare/surveys
 
-hdfs dfs rm /user/w205/hospital_compare/*
+hdfs dfs -rm /user/w205/hospital_compare/*
 hdfs dfs -rmdir /user/w205/hospital_compare
 
 # change directory back to the original
