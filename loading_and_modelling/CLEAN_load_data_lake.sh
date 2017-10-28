@@ -10,8 +10,10 @@ rmdir ~/staging
 
 
 # remove hdfs directory
-hdfs dfs -rm /user/w205/hospital_compare/hospital/hospitals.csv
+hdfs dfs -rm /user/w205/hospital_compare/hospitals/hospitals.csv
 hdfs dfs -rmdir /user/w205/hospital_compare/hospitals
+hdfs dfs -rm /user/w205/hospital_compare/hospital/hospitals.csv
+hdfs dfs -rmdir /user/w205/hospital_compare/hospital
 hdfs dfs -rm /user/w205/hospital_compare/complications/complications.csv
 hdfs dfs -rmdir /user/w205/hospital_compare/complications
 hdfs dfs -rm /user/w205/hospital_compare/hais/hais.csv

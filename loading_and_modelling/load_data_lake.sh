@@ -30,13 +30,13 @@ hdfs dfs -mkdir /user/w205/hospital_compare/measures
 hdfs dfs -mkdir /user/w205/hospital_compare/surveys
 
 #-- Hospital Information
-OLD_FILE="Hospital General Informcation.csv"
+OLD_FILE="Hospital General Information.csv"
 NEW_FILE="hospitals.csv"
 tail -n +2 "$OLD_FILE" > $NEW_FILE
 hdfs dfs -put $NEW_FILE /user/w205/hospital_compare/hospitals
 
 #"COMPLICATIONS-HOSPITAL.csv" - complications
-OLD_FILE="Complications and Deaths – Hospital.csv"
+OLD_FILE="Complications and Deaths - Hospital.csv"
 NEW_FILE="complications.csv"
 tail -n +2 "$OLD_FILE" > $NEW_FILE
 hdfs dfs -put $NEW_FILE /user/w205/hospital_compare/complications
@@ -48,7 +48,7 @@ tail -n +2 "$OLD_FILE" > $NEW_FILE
 hdfs dfs -put $NEW_FILE /user/w205/hospital_compare/hais
 
 #"Readmissions and Deaths - Hospital.csv" - procedure data
-OLD_FILE="Hospital Returns – Hospital.csv"
+OLD_FILE="Hospital Returns - Hospital.csv"
 NEW_FILE="returns.csv"
 tail -n +2 "$OLD_FILE" > $NEW_FILE
 hdfs dfs -put $NEW_FILE /user/w205/hospital_compare/returns
