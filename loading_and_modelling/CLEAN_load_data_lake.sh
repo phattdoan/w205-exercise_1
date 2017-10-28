@@ -1,7 +1,7 @@
-#!bin/bash
+#!/bin/bash
 
 # save my current directory
-MY_CWD = $(pwd)
+MY_CWD=$(pwd)
 
 # remove staging directory
 rm ~/staging/exercise_1/*
