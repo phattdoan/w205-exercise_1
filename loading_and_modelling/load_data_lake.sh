@@ -1,4 +1,4 @@
-#!bin/bash
+#!bin/sh
 
 # save my current directory
 MY_CWD = $(pwd)
