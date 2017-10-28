@@ -225,6 +225,21 @@ Setting up environment:
 	   	- /data/start_metastore.sh
 	   	- /data/spark15/bin/spark-sql
 
+. switch to `su w205`
+
+. Run git_load_remove.sh to clone the git repo for execution of loading_and_modelling
+	
+. Stop hadoop and postgres
+	. Stop hive 
+		- ps -ef|grep metastore
+		- kill <id>
+	.`/root/stop-hadoop.sh`
+	.`/data/stop_postgres.sh`
+
+
+## Week 2: transforming data lake
+
+[OBSOLETE]
 . Get the latest dataset: https://data.medicare.gov/views/bg9k-emty/files/4a66c672-a92a-4ced-82a2-033c28581a90?content_type=application%2Fzip%3B%20charset%3Dbinary&filename=Hospital_Revised_Flatfiles.zip
 
 . Tables:
@@ -244,12 +259,7 @@ Setting up environment:
 	. hdfs dfs -put userdata_lab.csv /user/w205/lab_3/user_data
 	. hdfs dfs -put weblog_lab.csv /user/w205/lab_3/weblog_data
 
-. Stop hadoop and postgres
-	. Stop hive 
-		- ps -ef/grep metastore
-		- kill <id>
-	.`/root/stop-hadoop.sh`
-	.`/data/stop_postgres.sh`
+
 
 Git setup:
 
