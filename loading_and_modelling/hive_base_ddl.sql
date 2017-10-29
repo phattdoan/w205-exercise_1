@@ -1,5 +1,4 @@
 DROP TABLE hospitals;
-
 CREATE EXTERNAL TABLE hospitals
 (
 	provider_id string,
@@ -30,7 +29,6 @@ CREATE EXTERNAL TABLE hospitals
 	timeliness_of_care_national_comparison_footnote string,
 	efficient_use_of_medical_imaging_national_comparison string,
 	efficient_use_of_medical_imaging_national_comparison_footnote string
-
 )
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES
@@ -41,9 +39,7 @@ WITH SERDEPROPERTIES
 )
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/hospitals';
-
 DROP TABLE complications;
-
 CREATE EXTERNAL TABLE complications
 (
 	provider_id string,
@@ -64,7 +60,6 @@ CREATE EXTERNAL TABLE complications
 	footnote string,
 	measure_start_date string,
 	measure_end_date string
-
 )
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES
@@ -75,9 +70,7 @@ WITH SERDEPROPERTIES
 )
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/complications';
-
 DROP TABLE hais;
-
 CREATE EXTERNAL TABLE hais
 (
 	provider_id  string,
@@ -95,7 +88,6 @@ CREATE EXTERNAL TABLE hais
 	footnote string,
 	measure_start_date string,
 	measure_end_date string
-
 )
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES
@@ -106,9 +98,7 @@ WITH SERDEPROPERTIES
 )
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/hais';
-
 DROP TABLE returns;
-
 CREATE EXTERNAL TABLE returns
 (
 	provider_id  string,
@@ -139,9 +129,7 @@ WITH SERDEPROPERTIES
 )
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/returns';
-
 DROP TABLE care;
-
 CREATE EXTERNAL TABLE care
 (
 	provider_id  string,
@@ -170,9 +158,7 @@ WITH SERDEPROPERTIES
 )
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/care';
-
 DROP TABLE measures;
-
 CREATE EXTERNAL TABLE measures
 (
 	measure_name string,
@@ -190,9 +176,7 @@ WITH SERDEPROPERTIES (
 )
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/measures';
-
 DROP TABLE surveys;
-
 CREATE EXTERNAL TABLE surveys
 ( 
     provider_number string,
