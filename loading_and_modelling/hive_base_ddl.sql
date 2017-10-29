@@ -32,7 +32,7 @@ CREATE EXTERNAL TABLE hospitals
 	efficient_use_of_medical_imaging_national_comparison_footnote string
 
 )
-ROW FORMAT SERD 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES
 (
 	"separatorChar" = ",",
@@ -66,7 +66,7 @@ CREATE EXTERNAL TABLE complications
 	measure_end_date string
 
 )
-ROW FORMAT SERD 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES
 (
 	"separatorChar" = ",",
@@ -97,7 +97,7 @@ CREATE EXTERNAL TABLE hais
 	measure_end_date string
 
 )
-ROW FORMAT SERD 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES
 (
 	"separatorChar" = ",",
@@ -130,7 +130,7 @@ CREATE EXTERNAL TABLE returns
 	measure_start_date string,
 	measure_end_date string
 )
-ROW FORMAT SERD 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES
 (
 	"separatorChar" = ",",
@@ -161,7 +161,7 @@ CREATE EXTERNAL TABLE care
 	measure_start_date string,
 	measure_end_date string
 )
-ROW FORMAT SERD 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES
 (
 	"separatorChar" = ",",
