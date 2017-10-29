@@ -40,7 +40,7 @@ WITH SERDEPROPERTIES
 	"escapeChar" = "\\"
 )
 STORED AS TEXTFILE
-LOCATIOn '/user/w205/hospital_compare/hospitals';
+LOCATION '/user/w205/hospital_compare/hospitals';
 
 DROP TABLE complications;
 
@@ -74,7 +74,7 @@ WITH SERDEPROPERTIES
 	"escapeChar" = "\\"
 )
 STORED AS TEXTFILE
-LOCATIOn '/user/w205/hospital_compare/complications';
+LOCATION '/user/w205/hospital_compare/complications';
 
 DROP TABLE hais;
 
@@ -105,7 +105,7 @@ WITH SERDEPROPERTIES
 	"escapeChar" = "\\"
 )
 STORED AS TEXTFILE
-LOCATIOn '/user/w205/hospital_compare/hais';
+LOCATION '/user/w205/hospital_compare/hais';
 
 DROP TABLE returns;
 
@@ -138,7 +138,7 @@ WITH SERDEPROPERTIES
 	"escapeChar" = "\\"
 )
 STORED AS TEXTFILE
-LOCATIOn '/user/w205/hospital_compare/returns';
+LOCATION '/user/w205/hospital_compare/returns';
 
 DROP TABLE care;
 
@@ -169,7 +169,7 @@ WITH SERDEPROPERTIES
 	"escapeChar" = "\\"
 )
 STORED AS TEXTFILE
-LOCATIOn '/user/w205/hospital_compare/care';
+LOCATION '/user/w205/hospital_compare/care';
 
 DROP TABLE measures;
 
