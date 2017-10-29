@@ -1,5 +1,4 @@
 DROP TABLE hospitals;
-
 CREATE EXTERNAL TABLE hospitals
 (
 	provider_id string,
@@ -30,14 +29,13 @@ CREATE EXTERNAL TABLE hospitals
 	timeliness_of_care_national_comparison_footnote string,
 	efficient_use_of_medical_imaging_national_comparison string,
 	efficient_use_of_medical_imaging_national_comparison_footnote string
-
 )
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES
 (
-	"separatorChar" = ",",
-	"quoteChar" = "",
-	"escapeChar" = "\\"
+	"separatorChar" = ',',
+	"quoteChar" = '"',
+	"escapeChar" = '\\'
 )
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/hospitals';
