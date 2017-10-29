@@ -33,9 +33,9 @@ CREATE EXTERNAL TABLE hospitals
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES
 (
-	"separatorChar" = ",",
-	"quoteChar" = "",
-	"escapeChar" = "\\"
+	"separatorChar" = ',',
+	"quoteChar" = '"',
+	"escapeChar" = '\\'
 )
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/hospitals';
@@ -64,9 +64,9 @@ CREATE EXTERNAL TABLE complications
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES
 (
-	"separatorChar" = ",",
-	"quoteChar" = "",
-	"escapeChar" = "\\"
+	"separatorChar" = ',',
+	"quoteChar" = '"',
+	"escapeChar" = '\\'
 )
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/complications';
@@ -92,9 +92,9 @@ CREATE EXTERNAL TABLE hais
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES
 (
-	"separatorChar" = ",",
-	"quoteChar" = "",
-	"escapeChar" = "\\"
+	"separatorChar" = ',',
+	"quoteChar" = '"',
+	"escapeChar" = '\\'
 )
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/hais';
@@ -123,9 +123,9 @@ CREATE EXTERNAL TABLE returns
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES
 (
-	"separatorChar" = ",",
-	"quoteChar" = "",
-	"escapeChar" = "\\"
+	"separatorChar" = ',',
+	"quoteChar" = '"',
+	"escapeChar" = '\\'
 )
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/returns';
@@ -152,9 +152,9 @@ CREATE EXTERNAL TABLE care
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES
 (
-	"separatorChar" = ",",
-	"quoteChar" = "",
-	"escapeChar" = "\\"
+	"separatorChar" = ',',
+	"quoteChar" = '"',
+	"escapeChar" = '\\'
 )
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/care';
@@ -170,9 +170,9 @@ CREATE EXTERNAL TABLE measures
 )
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES (
-	"separatorChar" = ",",
-	"quoteChar" = "",
-	"escapeChar" = "\\"
+	"separatorChar" = ',',
+	"quoteChar" = '"',
+	"escapeChar" = '\\'
 )
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/measures';
@@ -255,9 +255,9 @@ CREATE EXTERNAL TABLE surveys
 )
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES (
-	"separatorChar" = ",",
-	"quoteChar" = "",
-	"escapeChar" = "\\"
+	"separatorChar" = ',',
+	"quoteChar" = '"',
+	"escapeChar" = '\\'
 )
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/surveys';
