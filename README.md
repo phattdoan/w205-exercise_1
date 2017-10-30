@@ -9,43 +9,69 @@
 4/ Are average scores for hospital quality or procedural variability correlated with patient survey responses?
 
 
-## Project plan & notes:
-. Identify key metrics for hospital and state evaluation as the models of high-quality care:
-	- Understand the data source
-		- Hospital (hospitals.csv)
-			- Contains all type of hospitals (i.e. acute care, emmergencies, level-1 trauma, etc)
-			- For comparison, would need to segment and focus on a specific type of hospitals:
-				- Size
-				- Population serving
-				- Population proportion
-				- Type of services provided
-		- High-quality care metrics:
-			- Readmission rate
-			- Patient satisfaction
-			- Cost of care
-			- HCAHPS Hospital consumer assessment of healthcare providers and systems
-			- Total Performance Score
-			- MSPB Medicare Spending Per Beneficiary
-		- Procedure variety
-			- AMI Acute Myocardial Infarction
-			- CABG Coronary Artery Bypass Graft
-			- CAUTI Catheter-associated urinary tract infections
-			- CDI Clostridium difficile Infection
-			- CJR Comprehensive Care Joint Replacement
-			- EDAC Excess days in acute care
-			- HAI Healthcare-associated infections
-			- HBIPS Hospital-Based inpatient psychiatreic services
-			- HF Heart Failure
-			- HIP-KNEE TKA
-			- IMG Imaging
-			- complMORT Mortality
-			- MRSA
-			- OCM Oncology Care Measures
-			- OP Outpatient
-			- OQR Oupatient Quality Reporting
-			- PN Pneumonia
-			- STK Stroke
-	- Measures have different dates. Most measures have completed data set for 2015, hence all evaluation will focus on the year of 2015
+## Phase 1: Setting up the data lake
+### Setting up environment:
+. Start AWS
+. Attached volume & start HDFS + Postgres
+	Find the volume location: `fdisk -l`
+	   . Mount the volume as follows: `mount -t ext4 /dev/xvdf /data`
+	   . Start HDFS, Hadoop Yarn and Hive: `/root/start-hadoop.sh`
+	   . Start Postgres: `/data/start_postgres.sh`
+	   . Start Hive metastore
+	   	- /data/start_metastore.sh
+	   	- /data/spark15/bin/spark-sql
+
+. switch to `su w205`
+
+. Run git_load_remove.sh to clone the git repo for execution of loading_and_modelling
+
+. Load data with:
+	- `cd w205-exercise_1/loading_and_modelling`
+	- `./load_data_lake.sh` to download CMS dataset and load necessary files into HDFS
+	- If loading fails, run this to clean the data lake before troubleshooting `./CLEAN_load_data_lake.sh`
+	
+. Stop hadoop and postgres
+	. Stop hive 
+		- ps -ef|grep metastore
+		- kill <id>
+	.`/root/stop-hadoop.sh`
+	.`/data/stop_postgres.sh`
+
+### Identify key metrics for hospital and state evaluation as the models of high-quality care:
+- Understand the data source
+	- Hospital (hospitals.csv)
+		- Contains all type of hospitals (i.e. acute care, emmergencies, level-1 trauma, etc)
+		- For comparison, would need to segment and focus on a specific type of hospitals:
+			- Size
+			- Population serving
+			- Population proportion
+			- Type of services provided
+	- High-quality care metrics:
+		- Readmission rate
+		- Patient satisfaction
+		- Cost of care
+		- HCAHPS Hospital consumer assessment of healthcare providers and systems
+		- Total Performance Score
+		- MSPB Medicare Spending Per Beneficiary
+	- Procedure variety
+		- AMI Acute Myocardial Infarction
+		- CABG Coronary Artery Bypass Graft
+		- CAUTI Catheter-associated urinary tract infections
+		- CDI Clostridium difficile Infection
+		- CJR Comprehensive Care Joint Replacement
+		- EDAC Excess days in acute care
+		- HAI Healthcare-associated infections
+		- HBIPS Hospital-Based inpatient psychiatreic services
+		- HF Heart Failure
+		- HIP-KNEE TKA
+		- IMG Imaging
+		- complMORT Mortality
+		- MRSA
+		- OCM Oncology Care Measures
+		- OP Outpatient
+		- OQR Oupatient Quality Reporting
+		- PN Pneumonia
+		- STK Stroke
 . Selected tables to be loaded into a data lake
 	- Hospital General Information.csv -> hospitals.csv
 		- Table is at hospital level detail that contains all hospital details
@@ -199,55 +225,41 @@
 	- Measure Dates.csv -> measures.csv
 		- Contain key mapping for measures
 		- Key: Measure ID
-. Build schema based on available data
-. Transform the data
-. EDA questions
-	- What is the distribution of "Hospital overall rating" in the hospital.csv?
-
-. Problems with the data:
-	- From CMS, data might be skewed that represent a Medicare population rather than a truly generalized American population
+. Potential problems with the data:
+	- This dataset is from CMS, thus the data might be skewed as it represents a Medicare population rather than a truly generalized American population
 
 
+## Phase 2: 
+### EDA questions
+- What is the distribution of "Hospital overall rating" in the hospital.csv?
 
-## Week 1: Setting up the data lake
-Files:
-. Load data_lake: https://raw.githubusercontent.com/phattdoan/UCB-205-HDFS-HIVE-SPARK/master/load_data_lake.sh
+### Exploring the dataset: 
+`select hospital_type, count(*) from hospitals group by hospital_type;`
+`select state, count(*) from hospitals where hospital_type like '%Acute%' 
+group by state order by state;`
+. There are 3 types of hospitals observed from the data:
+	Childrens: 99
+	Acute Care hospitals: 3369
+	Critical Access hospitals: 1344 - critical access hospital is a designation given to certain rural hospitals by the Centers for Medicare and Medicaid Services (CMS)
 
-Setting up environment:
-. Start AWS
-. Attached volume & start HDFS + Postgres
-	Find the volume location, by typing `fdisk -l`
-   
-	   . Mount the volume as follows: `mount -t ext4 /dev/xvdf /data`
-	   . Start HDFS, Hadoop Yarn and Hive: `/root/start-hadoop.sh`
-	   . Start Postgres: `/data/start_postgres.sh`
-	   . Start Hive metastore
-	   	- /data/start_metastore.sh
-	   	- /data/spark15/bin/spark-sql
+`select emergency_services, count(*) from hospital_info group by emergency_services;`
+. With emergency services
+	No      238
+	Yes     3131
 
-. switch to `su w205`
+. With meets criteria:
+	Not Available   1
+	Y       3075
+	        55
+For this review purpose, I would focus on Acute Care hospitals with emergency services and meet CM<S criteria since childrens and critical access hospitals serve different purposes and certainly would require different measuring metrics./
 
-. Run git_load_remove.sh to clone the git repo for execution of loading_and_modelling
-	
-. Stop hadoop and postgres
-	. Stop hive 
-		- ps -ef|grep metastore
-		- kill <id>
-	.`/root/stop-hadoop.sh`
-	.`/data/stop_postgres.sh`
+### transforming data lake
+`source hospital_info.sql`
+. hospital_info: contain information and CMS-aggregated measures for acute care hospitals with emergency services only, excluding childrens and critical access hospitals.
 
-
-## Week 2: transforming data lake
-.hospital_info: contain information and CMS-aggregated measures
+`source hospital_compare.sql`
+. hospital_compare:
 	provider_id,
-	hospital_name,
-	city,
-	state,
-	zip_code,
-	hospital_type,
-	hospital_ownership,
-	emergency_services,
-	meets_criteria,
 	hospital_overall_rating,
 	mortality_national_comparison,
 	safety_of_care_national_comparison,
@@ -256,7 +268,9 @@ Setting up environment:
 	effectiveness_of_care_national_comparison,
 	timeliness_of_care_national_comparison,
 	efficient_use_of_medical_imaging_national_comparison
-.hospital_baseline:
+
+`source hospital_baseline.sql`
+. hospital_baseline: for each CMS measure and its comparison to national, each comparison can be 'above', 'below' or 'no different than the national average'. Using this, I transform the comparison into a score, with 3 for 'above national average', 1 for 'below national average', and 2 for 'no different' or null variable. This allows me to aggregate the score later into one combined metric for measuring the performance of each hospital.
 	provider_id,
 	mortality_score,
 	safety_score,
@@ -265,48 +279,39 @@ Setting up environment:
 	effectiveness_score,
 	timeliness_score,
 	efficiency_score
-.transformed_complications:
-
-Death rate for CABG     4812
-Heart failure (HF) 30-Day Mortality Rate        4812
-Accidental cuts and tears from medical treatment        4812
-Infections from a large venous catheter 4812
-Blood stream infection after surgery    4812
-Death rate for stroke patients  4812
-Acute Myocardial Infarction (AMI) 30-Day Mortality Rate 4812
-Death rate for chronic obstructive pulmonary disease (COPD) patients    4812
-Serious blood clots after surgery       4812
-Pressure sores  4812
-A wound that splits open  after surgery on the abdomen or pelvis        4812
-Broken hip from a fall after surgery    4812
-Collapsed lung due to medical treatment 4812
-Deaths among Patients with Serious Treatable Complications after Surgery        4812
-Rate of complications for hip/knee replacement patients 4812
-Serious complications   4812
-Pneumonia (PN) 30-Day Mortality Rate    4812
----
-Not Available   24647
-No Different than the National Rate     45873
-Number of Cases Too Small       8876
-Better than the National Rate   1006
-Worse than the National Rate    1402
 
 
+## Phase 3: investigating
+### Question 1: Top hospitals in the nation using CMS metrics
+`select hospital_name, mortality_score + safety_score + readmission_score + patient_experience_score + effectiveness_score + timeliness_score + efficiency_score as total_score from hospital_baseline order by total_score desc limit 10;`
+. Using hospital_baseline with CMS-aggregated metrics, these are the top 10 hospitals in the country:
+	CITIZENS MEDICAL CENTER 450023  VICTORIA        TX      20
+	SHARP MEMORIAL HOSPITAL 050100  SAN DIEGO       CA      19
+	SHERMAN HOSPITAL        140030  ELGIN   IL      19
+	SCOTTSDALE THOMPSON PEAK MEDICAL CENTER 030123  SCOTTSDALE      AZ      19
+	SHANNON MEDICAL CENTER  450571  SAN ANGELO      TX      19
+	LAKEVIEW MEDICAL CENTER 520011  RICE LAKE       WI      19
+	MERCY HOSPITAL  160029  IOWA CITY       IA      19
+	MOSAIC LIFE CARE AT ST JOSEPH   260006  SAINT JOSEPH    MO      19
+	ST LUKES HOSPITAL       260179  CHESTERFIELD    MO      19
+	FAIRVIEW HOSPITAL       360077  CLEVELAND       OH      19
+	ADVENTIST HINSDALE HOSPITAL     140122  HINSDALE        IL      19
+	AVERA ST LUKES  430014  ABERDEEN        SD      19
+	AVERA HEART HOSPITAL OF SOUTH DAKOTA    430095  SIOUX FALLS     SD      19
+	RIVERSIDE MEDICAL CENTER        140186  KANKAKEE        IL      19
+	MAYO CLINIC HOSPITAL    030103  PHOENIX AZ      18
+	POUDRE VALLEY HOSPITAL  060010  FORT COLLINS    CO      18
+	EAST ALABAMA MEDICAL CENTER     010029  OPELIKA AL      18
+	METHODIST HOSPITAL OF SOUTHERN CA       050238  ARCADIA CA      18
+	SARASOTA MEMORIAL HOSPITAL      100087  SARASOTA        FL      18
+	ELKHART GENERAL HOSPITAL        150018  ELKHART IN      18
+	MEDICAL CENTER OF AURORA, THE   060100  AURORA  CO      18
+	KISHWAUKEE COMMUNITY HOSPITAL   140286  DEKALB  IL      18
+	FAIRVIEW PARK HOSPITAL  110125  DUBLIN  GA      18
+	ADVOCATE CONDELL MEDICAL CENTER 140202  LIBERTYVILLE    IL      18
+	ST VINCENT KOKOMO       150010  KOKOMO  IN      18
 
-## Week 3: investigating
-. Hospitals: 
-	. There are 3 types of hospitals observed from the data:
-		Childrens: 99
-		Acute Care hospitals: 3369
-		Critical Access hospitals: 1344 - critical access hospital is a designation given to certain rural hospitals by the Centers for Medicare and Medicaid Services (CMS)
-	. With emergency services
-		No      238
-		Yes     3131
-	. With meets criteria:
-		Not Available   1
-		Y       3075
-		        55
-	For this review purpose, I would focus on Acute Care hospitals with emergency services and meet criteria since childrens and critical access hospitals serve different purposes as well as different measuring metrics
+### Question 2: What states are models of high-quality care?
 .States: including on acute care hospitals, not surprisingly most hospitals concentrated in states with dense population
 	AK      8
 	AL      84
@@ -364,160 +369,7 @@ Worse than the National Rate    1402
 	WI      66
 	WV      29
 	WY      12
-. Using hospital_baseline with CMS-aggregated metrics, these are the top 10 hospitals in the country:
-	CITIZENS MEDICAL CENTER 450023  VICTORIA        TX      20
-	SHARP MEMORIAL HOSPITAL 050100  SAN DIEGO       CA      19
-	SHERMAN HOSPITAL        140030  ELGIN   IL      19
-	SCOTTSDALE THOMPSON PEAK MEDICAL CENTER 030123  SCOTTSDALE      AZ      19
-	SHANNON MEDICAL CENTER  450571  SAN ANGELO      TX      19
-	LAKEVIEW MEDICAL CENTER 520011  RICE LAKE       WI      19
-	MERCY HOSPITAL  160029  IOWA CITY       IA      19
-	MOSAIC LIFE CARE AT ST JOSEPH   260006  SAINT JOSEPH    MO      19
-	ST LUKES HOSPITAL       260179  CHESTERFIELD    MO      19
-	FAIRVIEW HOSPITAL       360077  CLEVELAND       OH      19
-	ADVENTIST HINSDALE HOSPITAL     140122  HINSDALE        IL      19
-	AVERA ST LUKES  430014  ABERDEEN        SD      19
-	AVERA HEART HOSPITAL OF SOUTH DAKOTA    430095  SIOUX FALLS     SD      19
-	RIVERSIDE MEDICAL CENTER        140186  KANKAKEE        IL      19
-	MAYO CLINIC HOSPITAL    030103  PHOENIX AZ      18
-	POUDRE VALLEY HOSPITAL  060010  FORT COLLINS    CO      18
-	EAST ALABAMA MEDICAL CENTER     010029  OPELIKA AL      18
-	METHODIST HOSPITAL OF SOUTHERN CA       050238  ARCADIA CA      18
-	SARASOTA MEMORIAL HOSPITAL      100087  SARASOTA        FL      18
-	ELKHART GENERAL HOSPITAL        150018  ELKHART IN      18
-	MEDICAL CENTER OF AURORA, THE   060100  AURORA  CO      18
-	KISHWAUKEE COMMUNITY HOSPITAL   140286  DEKALB  IL      18
-	FAIRVIEW PARK HOSPITAL  110125  DUBLIN  GA      18
-	ADVOCATE CONDELL MEDICAL CENTER 140202  LIBERTYVILLE    IL      18
-	ST VINCENT KOKOMO       150010  KOKOMO  IN      18
 
+### Question 3: Which procedures have the greatest variability between hospitals?
 
-
-
-[OBSOLETE]
-. Get the latest dataset: https://data.medicare.gov/views/bg9k-emty/files/4a66c672-a92a-4ced-82a2-033c28581a90?content_type=application%2Fzip%3B%20charset%3Dbinary&filename=Hospital_Revised_Flatfiles.zip
-
-. Tables:
-	. General Hospital Information
-	. "Timeline and Effective Care - Hospital.csv" - procedure data
-	. "Readmissions and Deaths - Hospital.csv" - procedure data
-	. "Measure Dates.csv" - mapping of measures to codes
-	. "hvbp_hca_hps_05_28_2015.csv" - survey response data
-	. "COMPLICATIONS-HOSPITAL.csv" - complications
-	. "HEALTHCARE ASSOCIATED INFECTIONS-HOSPITALS.csv"
-	. "PAYMENT-HOSPITAL.csv" - payment and value of care
-	. "MEDICARE HOSPITAL SPENDING PER PATIENT-HOSPITAL.csv" - medicare spending per beneficiary
-
-. Clean files and remove first lines4
-
-. Load files into HDFS
-	. hdfs dfs -put userdata_lab.csv /user/w205/lab_3/user_data
-	. hdfs dfs -put weblog_lab.csv /user/w205/lab_3/weblog_data
-
-
-
-Git setup:
-
-load_data_lake.sh
-chmod u+x,g+x load_data_lake.sh
-
-
-Staging:
-```
-mkdir staging
-cd staging
-mkdir exercise_1
-echo $MY_URL = "https://data.medicare.gov/views/bg9k-emty/files/4a66c672-a92a-4ced-82a2-033c28581a90?content_type=application%2Fzip%3B%20charset%3Dbinary&filename=Hospital_Revised_Flatfiles.zip"
-set -o vi
-wget "$MY_URL" -O medicare_data.zip
-unzip medicare_data.zip
-ls -l Hosp*.csv
-MY_FILE = "Hospital General Informcation.csv"
-head -5 "$MY_FILE"
-tail -n +2 "$MY_FILE" > hospitals.css # to remove header
-```
-
-Hadoop loading:
-hdfs dfs -ls /user/w205
-hdfs dfs -mkdir /user/w205/hospital_compare
-hdfs dfs -put hospitals.csv /user/w205/hospital_compare
-
-
-QA:
-check exercise1 directory
-chec
-
-
-```
-For Exercise 1, if you are using the latest dataset, there are a couple of names that have changed.  
-data.medicare.gov
-Hospital Compare Dataset
-Updated: 7/26/2017
-Name changes:
-Hospital General Information.csv => same
-Timely and Effective Case - Hospital.csv => same
-Readmissions and Deaths - Hospital.csv => Complications and Deaths - Hospital.csv
-Measure Dates.csv => same
-hvbp_hcahps_05_28_2015.csv => hvbp_hcahps_11_10_2016.csv
-```
-
-
-
-comm_nurses_floor
-comm_nurses_benchmark
-comm_nurses_baseline
-comm_nurses_performance
-comm_nurses_achievement
-comm_nurses_improvement
-comm_nurses_dimension
-comm_doctors_floor
-comm_doctors_benchmark
-comm_doctors_baseline
-comm_doctors_performance
-comm_doctors_achievement
-comm_doctors_improvement
-comm_doctors_dimension
-comm_medicines_floor
-comm_medicines_benchmark
-comm_medicines_baseline
-comm_medicines_performnaces
-comm_medicines_achievement
-comm_medicines_improvement
-comm_medicines_dimension
-responsiveness_staff_floor
-responsiveness_staff_benchmark
-responsiveness_staff_baseline
-responsiveness_staff_performance
-responsiveness_staff_achievement
-responsiveness_staff_improvement
-responsiveness_staff_dimension
-pain_management_floor
-pain_management_benchmark
-pain_management_baseline
-pain_management_performance
-pain_management_achievement
-pain_management_improvement
-pain_management_dimension
-clean_quiet_floor
-clean_quiet_benchmark
-clean_quiet_baseline
-clean_quiet_performance
-clean_quiet_achievement
-clean_quiet_improvement
-clean_quiet_dimension
-discharge_floor
-discharge_benchmark
-discharge_baseline
-discharge_performance
-discharge_achievement
-discharge_improvement
-discharge_dimension
-overall_rating_floor
-overall_rating_benchmark
-overall_rating_baseline
-overall_rating_performance
-overall_rating_achievement
-overall_rating_improvement
-overall_rating_dimension
-hcahps_base_score
-hcahps_consistency_score
+### Question 4:Are average scores for hospital quality or procedural variability correlated with patient survey responses?

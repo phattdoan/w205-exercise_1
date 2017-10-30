@@ -11,15 +11,7 @@ select
 	hospital_type,
 	hospital_ownership,
 	emergency_services,
-	meets_criteria,
-	hospital_overall_rating,
-	mortality_national_comparison,
-	safety_of_care_national_comparison,
-	readmission_national_comparison,
-	patient_experience_national_comparison,
-	effectiveness_of_care_national_comparison,
-	timeliness_of_care_national_comparison,
-	efficient_use_of_medical_imaging_national_comparison
+	meets_criteria
 from hospitals
 where hospital_type like '%Acute%' 
 	and emergency_services = 'Yes' and meets_criteria = 'Y';
