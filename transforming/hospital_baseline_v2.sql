@@ -8,7 +8,7 @@ select
 	cast(case when safety_of_care_national_comparison like 'Above%' then 3 
 		when safety_of_care_national_comparison like 'Below%' then 1 
 		else 2 end as int) as safety_score,
-	cast(case when readmission_naitonal_comparison like 'Above%' then 3 
+	cast(case when readmission_national_comparison like 'Above%' then 3 
 		when readmission_national_comparison like 'Below%' then 1 
 		else 2 end as int) as readmission_score,
 	cast(case when patient_experience_national_comparison like 'Above%' then 3 
