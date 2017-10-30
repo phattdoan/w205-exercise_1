@@ -21,4 +21,5 @@ select
 	timeliness_of_care_national_comparison,
 	efficient_use_of_medical_imaging_national_comparison
 from hospitals
-where hospital_type like '%Acute%' and emergency_services = 'Yes';
+where hospital_type like '%Acute%' 
+	and emergency_services = 'Yes' and meets_criteria = 'Y';
