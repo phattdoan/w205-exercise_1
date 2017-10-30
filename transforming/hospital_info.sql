@@ -1,5 +1,5 @@
 --create hospital_info table that serve as a reference table
--- include only acute care hospitals
+-- include only acute care hospitals with emergency services
 drop table hospital_info;
 create table hospital_info as
 select 
@@ -21,4 +21,4 @@ select
 	timeliness_of_care_national_comparison,
 	efficient_use_of_medical_imaging_national_comparison
 from hospitals
-where hospital_type like '%Acute%';
+where hospital_type like '%Acute%' and emergency_services = 'Yes';

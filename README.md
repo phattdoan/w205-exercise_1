@@ -238,13 +238,37 @@ Setting up environment:
 
 
 ## Week 2: transforming data lake
+.hospital_info: contain information and CMS-aggregated measures
+	provider_id,
+	hospital_name,
+	city,
+	state,
+	zip_code,
+	hospital_type,
+	hospital_ownership,
+	emergency_services,
+	meets_criteria,
+	hospital_overall_rating,
+	mortality_national_comparison,
+	safety_of_care_national_comparison,
+	readmission_national_comparison,
+	patient_experience_national_comparison,
+	effectiveness_of_care_national_comparison,
+	timeliness_of_care_national_comparison,
+	efficient_use_of_medical_imaging_national_comparison
+
+.hospital_baseline:
 
 ## Week 3: investigating
-. Hospitals: there are 3 types of hospitals observed from the data:
-	. Childrens: 99
-	. Acute Care hospitals: 3369
-	. Critical Access hospitals: 1344 - critical access hospital is a designation given to certain rural hospitals by the Centers for Medicare and Medicaid Services (CMS)
-	For this review purpose, I would focus on Acute Care hospitals since childrens and critical access hospitals serve different purposes as well as different measuring metrics
+. Hospitals: 
+	. There are 3 types of hospitals observed from the data:
+		Childrens: 99
+		Acute Care hospitals: 3369
+		Critical Access hospitals: 1344 - critical access hospital is a designation given to certain rural hospitals by the Centers for Medicare and Medicaid Services (CMS)
+	. With emergency services
+		No      238
+		Yes     3131
+	For this review purpose, I would focus on Acute Care hospitals with emergency services since childrens and critical access hospitals serve different purposes as well as different measuring metrics
 .States: including on acute care hospitals, not surprisingly most hospitals concentrated in states with dense population
 AK      8
 AL      84
@@ -302,9 +326,6 @@ WA      49
 WI      66
 WV      29
 WY      12
-
-.
-
 
 [OBSOLETE]
 . Get the latest dataset: https://data.medicare.gov/views/bg9k-emty/files/4a66c672-a92a-4ced-82a2-033c28581a90?content_type=application%2Fzip%3B%20charset%3Dbinary&filename=Hospital_Revised_Flatfiles.zip
