@@ -280,10 +280,15 @@ For this review purpose, I would focus on Acute Care hospitals with emergency se
 	timeliness_score,
 	efficiency_score
 
+`source states_hospital_count.sql`
+. states_hospital_count: count number of hospitals per state
+	state
+	hospital_count
+
 
 ## Phase 3: investigating
 ### Question 1: Top hospitals in the nation using CMS metrics
-`select hospital_name, mortality_score + safety_score + readmission_score + patient_experience_score + effectiveness_score + timeliness_score + efficiency_score as total_score from hospital_baseline order by total_score desc limit 10;`
+`source top_hospital.sql`
 . Using hospital_baseline with CMS-aggregated metrics, these are the top 10 hospitals in the country:
 	CITIZENS MEDICAL CENTER 450023  VICTORIA        TX      20
 	SHARP MEMORIAL HOSPITAL 050100  SAN DIEGO       CA      19
@@ -312,7 +317,8 @@ For this review purpose, I would focus on Acute Care hospitals with emergency se
 	ST VINCENT KOKOMO       150010  KOKOMO  IN      18
 
 ### Question 2: What states are models of high-quality care?
-.States: including on acute care hospitals, not surprisingly most hospitals concentrated in states with dense population
+`select * from states_hospital_count`
+States that include on acute care hospitals, not surprisingly most hospitals concentrated in states with dense population
 	AK      8
 	AL      84
 	AR      45
@@ -369,6 +375,11 @@ For this review purpose, I would focus on Acute Care hospitals with emergency se
 	WI      66
 	WV      29
 	WY      12
+
+To determine the states that are models of high-quality care, I determine to calculate the percentage of hospitals in the top 50 for each state. 
+
+Top 5 states with highest percentage of hospitals in the top 50 based on the rating:
+
 
 ### Question 3: Which procedures have the greatest variability between hospitals?
 
