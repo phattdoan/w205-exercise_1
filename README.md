@@ -239,6 +239,73 @@ Setting up environment:
 
 ## Week 2: transforming data lake
 
+## Week 3: investigating
+. Hospitals: there are 3 types of hospitals observed from the data:
+	. Childrens: 99
+	. Acute Care hospitals: 3369
+	. Critical Access hospitals: 1344 - critical access hospital is a designation given to certain rural hospitals by the Centers for Medicare and Medicaid Services (CMS)
+	For this review purpose, I would focus on Acute Care hospitals since childrens and critical access hospitals serve different purposes as well as different measuring metrics
+.States: including on acute care hospitals, not surprisingly most hospitals concentrated in states with dense population
+AK      8
+AL      84
+AR      45
+AS      1
+AZ      63
+CA      298
+CO      48
+CT      30
+DC      7
+DE      6
+FL      170
+GA      101
+GU      2
+HI      12
+IA      34
+ID      14
+IL      126
+IN      85
+KS      52
+KY      65
+LA      92
+MA      57
+MD      47
+ME      17
+MI      94
+MN      50
+MO      72
+MP      1
+MS      63
+MT      14
+NC      86
+ND      8
+NE      23
+NH      13
+NJ      64
+NM      32
+NV      22
+NY      152
+OH      128
+OK      86
+OR      34
+PA      150
+PR      51
+RI      11
+SC      54
+SD      21
+TN      90
+TX      315
+UT      32
+VA      75
+VI      2
+VT      6
+WA      49
+WI      66
+WV      29
+WY      12
+
+.
+
+
 [OBSOLETE]
 . Get the latest dataset: https://data.medicare.gov/views/bg9k-emty/files/4a66c672-a92a-4ced-82a2-033c28581a90?content_type=application%2Fzip%3B%20charset%3Dbinary&filename=Hospital_Revised_Flatfiles.zip
 
