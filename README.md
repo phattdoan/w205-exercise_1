@@ -256,8 +256,42 @@ Setting up environment:
 	effectiveness_of_care_national_comparison,
 	timeliness_of_care_national_comparison,
 	efficient_use_of_medical_imaging_national_comparison
-
 .hospital_baseline:
+	provider_id,
+	mortality_score,
+	safety_score,
+	readmission_score,
+	patient_experience_score,
+	effectiveness_score,
+	timeliness_score,
+	efficiency_score
+.transformed_complications:
+
+Death rate for CABG     4812
+Heart failure (HF) 30-Day Mortality Rate        4812
+Accidental cuts and tears from medical treatment        4812
+Infections from a large venous catheter 4812
+Blood stream infection after surgery    4812
+Death rate for stroke patients  4812
+Acute Myocardial Infarction (AMI) 30-Day Mortality Rate 4812
+Death rate for chronic obstructive pulmonary disease (COPD) patients    4812
+Serious blood clots after surgery       4812
+Pressure sores  4812
+A wound that splits open  after surgery on the abdomen or pelvis        4812
+Broken hip from a fall after surgery    4812
+Collapsed lung due to medical treatment 4812
+Deaths among Patients with Serious Treatable Complications after Surgery        4812
+Rate of complications for hip/knee replacement patients 4812
+Serious complications   4812
+Pneumonia (PN) 30-Day Mortality Rate    4812
+---
+Not Available   24647
+No Different than the National Rate     45873
+Number of Cases Too Small       8876
+Better than the National Rate   1006
+Worse than the National Rate    1402
+
+
 
 ## Week 3: investigating
 . Hospitals: 
@@ -330,6 +364,35 @@ Setting up environment:
 	WI      66
 	WV      29
 	WY      12
+. Using hospital_baseline with CMS-aggregated metrics, these are the top 10 hospitals in the country:
+	CITIZENS MEDICAL CENTER 450023  VICTORIA        TX      20
+	SHARP MEMORIAL HOSPITAL 050100  SAN DIEGO       CA      19
+	SHERMAN HOSPITAL        140030  ELGIN   IL      19
+	SCOTTSDALE THOMPSON PEAK MEDICAL CENTER 030123  SCOTTSDALE      AZ      19
+	SHANNON MEDICAL CENTER  450571  SAN ANGELO      TX      19
+	LAKEVIEW MEDICAL CENTER 520011  RICE LAKE       WI      19
+	MERCY HOSPITAL  160029  IOWA CITY       IA      19
+	MOSAIC LIFE CARE AT ST JOSEPH   260006  SAINT JOSEPH    MO      19
+	ST LUKES HOSPITAL       260179  CHESTERFIELD    MO      19
+	FAIRVIEW HOSPITAL       360077  CLEVELAND       OH      19
+	ADVENTIST HINSDALE HOSPITAL     140122  HINSDALE        IL      19
+	AVERA ST LUKES  430014  ABERDEEN        SD      19
+	AVERA HEART HOSPITAL OF SOUTH DAKOTA    430095  SIOUX FALLS     SD      19
+	RIVERSIDE MEDICAL CENTER        140186  KANKAKEE        IL      19
+	MAYO CLINIC HOSPITAL    030103  PHOENIX AZ      18
+	POUDRE VALLEY HOSPITAL  060010  FORT COLLINS    CO      18
+	EAST ALABAMA MEDICAL CENTER     010029  OPELIKA AL      18
+	METHODIST HOSPITAL OF SOUTHERN CA       050238  ARCADIA CA      18
+	SARASOTA MEMORIAL HOSPITAL      100087  SARASOTA        FL      18
+	ELKHART GENERAL HOSPITAL        150018  ELKHART IN      18
+	MEDICAL CENTER OF AURORA, THE   060100  AURORA  CO      18
+	KISHWAUKEE COMMUNITY HOSPITAL   140286  DEKALB  IL      18
+	FAIRVIEW PARK HOSPITAL  110125  DUBLIN  GA      18
+	ADVOCATE CONDELL MEDICAL CENTER 140202  LIBERTYVILLE    IL      18
+	ST VINCENT KOKOMO       150010  KOKOMO  IN      18
+
+
+
 
 [OBSOLETE]
 . Get the latest dataset: https://data.medicare.gov/views/bg9k-emty/files/4a66c672-a92a-4ced-82a2-033c28581a90?content_type=application%2Fzip%3B%20charset%3Dbinary&filename=Hospital_Revised_Flatfiles.zip
