@@ -23,7 +23,7 @@ select
 	cast(case when timeliness_of_care_national_comparison like 'Above%' then 3 
 		when timeliness_of_care_national_comparison like 'Below%' then 1 
 		else 2 end as int) as timeliness_score,
-	cast(case when efficient_use_of_medical_imaging_national_comparisonn like 'Above%' then 3 
+	cast(case when efficient_use_of_medical_imaging_national_comparison like 'Above%' then 3 
 		when efficient_use_of_medical_imaging_national_comparison like 'Below%' then 1 
 		else 2 end as int) as efficiency_score
 from hospital_info;
