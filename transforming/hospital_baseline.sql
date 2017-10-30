@@ -25,5 +25,6 @@ select
 		else 2 end as int) as timeliness_score,
 	cast(case when efficient_use_of_medical_imaging_national_comparison like 'Above%' then 3 
 		when efficient_use_of_medical_imaging_national_comparison like 'Below%' then 1 
-		else 2 end as int) as efficiency_score
+		else 2 end as int) as efficiency_score,
+	mortality_score + safety_score + readmission_score + patient_experience_score + effectiveness_score + timeliness_score + efficiency_score as total_score
 from hospital_info;

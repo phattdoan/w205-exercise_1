@@ -37,4 +37,4 @@ select
 	timeliness_score,
 	efficiency_score,
 	mortality_score + safety_score + readmission_score + patient_experience_score + effectiveness_score + timeliness_score + efficiency_score as total_score
-from hospital_info; 
+from baseline; 
