@@ -6,7 +6,7 @@ create table care_tranformed as
 	measure_id,
 	measure_name,
 	cast(score as float) score
-from effective_care;
+from care;
 --where (score not like 'Not%') or
 --	(score not like 'High%') or
 --	(score not like 'Med%')or

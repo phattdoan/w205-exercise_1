@@ -14,3 +14,6 @@ select hospital_name, mortality_score + safety_score + readmission_score + patie
 
 -- 
 select c.hospital_name, c.provider_id, i.city, i.state, mortality_score + safety_score + readmission_score + patient_experience_score + effectiveness_score + timeliness_score + efficiency_score as total_score from hospital_baseline c left join hospital_info i on c.provider_id = i.provider_id order by total_score desc limit 10;
+
+-- Hospital's emergency utilization
+select  score, count(*)  from care c inner join hospital_info i on c.provider_id = i.provider_id where measure_id like 'Emergency%' group by score;
