@@ -290,31 +290,17 @@ For this review purpose, I would focus on Acute Care hospitals with emergency se
 ### Question 1: Top hospitals in the nation using CMS metrics
 `source top_hospital.sql`
 . Using hospital_baseline with CMS-aggregated metrics, these are the top 10 hospitals in the country:
-	CITIZENS MEDICAL CENTER 450023  VICTORIA        TX      20
-	SHARP MEMORIAL HOSPITAL 050100  SAN DIEGO       CA      19
-	SHERMAN HOSPITAL        140030  ELGIN   IL      19
-	SCOTTSDALE THOMPSON PEAK MEDICAL CENTER 030123  SCOTTSDALE      AZ      19
-	SHANNON MEDICAL CENTER  450571  SAN ANGELO      TX      19
-	LAKEVIEW MEDICAL CENTER 520011  RICE LAKE       WI      19
-	MERCY HOSPITAL  160029  IOWA CITY       IA      19
-	MOSAIC LIFE CARE AT ST JOSEPH   260006  SAINT JOSEPH    MO      19
-	ST LUKES HOSPITAL       260179  CHESTERFIELD    MO      19
-	FAIRVIEW HOSPITAL       360077  CLEVELAND       OH      19
-	ADVENTIST HINSDALE HOSPITAL     140122  HINSDALE        IL      19
-	AVERA ST LUKES  430014  ABERDEEN        SD      19
-	AVERA HEART HOSPITAL OF SOUTH DAKOTA    430095  SIOUX FALLS     SD      19
-	RIVERSIDE MEDICAL CENTER        140186  KANKAKEE        IL      19
-	MAYO CLINIC HOSPITAL    030103  PHOENIX AZ      18
-	POUDRE VALLEY HOSPITAL  060010  FORT COLLINS    CO      18
-	EAST ALABAMA MEDICAL CENTER     010029  OPELIKA AL      18
-	METHODIST HOSPITAL OF SOUTHERN CA       050238  ARCADIA CA      18
-	SARASOTA MEMORIAL HOSPITAL      100087  SARASOTA        FL      18
-	ELKHART GENERAL HOSPITAL        150018  ELKHART IN      18
-	MEDICAL CENTER OF AURORA, THE   060100  AURORA  CO      18
-	KISHWAUKEE COMMUNITY HOSPITAL   140286  DEKALB  IL      18
-	FAIRVIEW PARK HOSPITAL  110125  DUBLIN  GA      18
-	ADVOCATE CONDELL MEDICAL CENTER 140202  LIBERTYVILLE    IL      18
-	ST VINCENT KOKOMO       150010  KOKOMO  IN      18
+	CITIZENS MEDICAL CENTER VICTORIA        TX      Voluntary non-profit - Other    20
+	SHANNON MEDICAL CENTER  SAN ANGELO      TX      Voluntary non-profit - Private  19
+	ADVENTIST HINSDALE HOSPITAL     HINSDALE        IL      Voluntary non-profit - Church   19
+	RIVERSIDE MEDICAL CENTER        KANKAKEE        IL      Voluntary non-profit - Private  19
+	AVERA ST LUKES  ABERDEEN        SD      Voluntary non-profit - Church   19
+	MERCY HOSPITAL  IOWA CITY       IA      Voluntary non-profit - Church   19
+	FAIRVIEW HOSPITAL       CLEVELAND       OH      Voluntary non-profit - Private  19
+	SCOTTSDALE THOMPSON PEAK MEDICAL CENTER SCOTTSDALE      AZ      Proprietary     19
+	SHERMAN HOSPITAL        ELGIN   IL      Voluntary non-profit - Private  19
+	AVERA HEART HOSPITAL OF SOUTH DAKOTA    SIOUX FALLS     SD      Proprietary     19
+
 
 ### Question 2: What states are models of high-quality care?
 `select * from states_hospital_count`
@@ -376,12 +362,50 @@ States that include on acute care hospitals, not surprisingly most hospitals con
 	WV      28
 	WY      10
 
-
-To determine the states that are models of high-quality care, I determine to calculate the percentage of hospitals in the top 50 for each state. 
+To determine the states that are models of high-quality care, I calculate the percentage of hospitals in the top 50 for each state. 
 
 Top 5 states with highest percentage of hospitals in the top 50 based on the rating:
+SD      0.125
+KS      0.09756097
+IN      0.093333334
+HI      0.083333336
+IL      0.076271184
+MO      0.071428575
 
 
 ### Question 3: Which procedures have the greatest variability between hospitals?
+Use data from transform_effective_care table, calculate the variance of each procedure by grouping measure_id.
+Make sure there are more than 30 (typical value for sampling) entries for each measure_id
+The top 10 procedures that have the highest variance are:
 
-### Question 4:Are average scores for hospital quality or procedural variability correlated with patient survey responses?
+ED_1b   Median Time from ED Arrival to ED Departure for Admitted ED Patients    10811.276308797285
+ED_2b	Admit Decision Time to ED Departure Time for Admitted Patients	4175.25729073216
+OP_18b	Median Time from ED Arrival to ED Departure for Discharged ED Patients	1862.5197069204853
+OP_3b	Median Time to Transfer to Another Facility for Acute Coronary Intervention- Reporting Rate	1050.3831507083971
+OP_31	Percentage of patients aged 18 years and older who had cataract surgery and had improvement in visual function achieved within 90 days following the cataract surgery	856.5066174207448
+OP_29	Appropriate Follow-Up Interval for Normal Colonoscopy in Average Risk Patients	600.399583081167
+OP_2	Fibrinolytic Therapy Received Within 30 Minutes of ED Arrival	460.320987654321
+OP_23	Head CT or MRI Scan Results for Acute Ischemic Stroke or Hemorrhagic Stroke Patients who Received Head CT or MRI Scan Interpretation Within 45 minutes of ED Arrival	397.03673005866665
+OP_30	Colonoscopy Interval for Patients with a History of Adenomatous Polyps - Avoidance of Inappropriate Use	371.6908658403638
+OP_20	Median Time from ED Arrival to Provider Contact for ED patients	331.9008076047884
+
+### Question 4: Are average scores for hospital quality or procedural variability correlated with patient survey responses?
+Join transform_surveys and best_hospitals so that we can compute the correlation coefficient 
+between hospital ranking (rating) score and patients survey responses regarding nurse, doctor etc.
+
+Correlation between hospital rating and nurse rating =0.5340670295160149       
+Correlation between hospital rating and doctor rating =0.4434510774602345     
+Correlation between hospital rating and  staff rating =0.5186374103477489     
+Correlation between hospital rating and pain management=0.48148498316864735    
+Correlation between hospital rating and quality communication =0.450553145164991      
+Correlation between hospital rating and environment =0.44895231097870686       
+Correlation between hospital rating and quality discharge =0.44964214024464566 
+Correlation between hospital rating and overall hospital performance=0.563389188296042
+
+Hospital rating (by previously described method) correlate well with patients survey rating.
+In particular, staff rating and hospital rating is the highest, followed by environment rating, 
+patient rating of the hospital,doctor rating, nurse rating, pain management, pain medicine communication, 
+and quality discharge.
+
+It seems the method used to access the quality of care is well correlated with patients' assessment.
+From the correlation, it would be advised for hospitals to invest resource to staff then hospital enviroment.
