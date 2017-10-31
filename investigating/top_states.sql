@@ -1,8 +1,11 @@
 -- top states
 drop table top_50_hospitals;
 create table top_50_hospitals as
-select i.hospital_name, i.city, i.state, i.hospital_ownership,
-	top.total_score 
+select i.hospital_name
+	, i.city
+	, i.state
+	, i.hospital_ownership
+	, top.total_score 
 	from top_hospitals top
 	left join hospital_info i
 		on i.provider_id = top.provider_id
