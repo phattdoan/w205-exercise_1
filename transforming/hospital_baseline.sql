@@ -4,7 +4,6 @@ drop table hospital_baseline;
 create table hospital_baseline as
 select 
 	provider_id,
-	hospital_name,
 	cast(case when mortality_national_comparison like 'Above%' then 3 
 		when mortality_national_comparison like 'Below%' then 1 
 		else 2 end as int) as mortality_score,
@@ -26,4 +25,4 @@ select
 	cast(case when efficient_use_of_medical_imaging_national_comparison like 'Above%' then 3 
 		when efficient_use_of_medical_imaging_national_comparison like 'Below%' then 1 
 		else 2 end as int) as efficiency_score
-from hospital_info;
+from hospital_compare;

@@ -320,61 +320,62 @@ For this review purpose, I would focus on Acute Care hospitals with emergency se
 `select * from states_hospital_count`
 States that include on acute care hospitals, not surprisingly most hospitals concentrated in states with dense population
 	AK      8
-	AL      84
-	AR      45
+	AL      81
+	AR      42
 	AS      1
-	AZ      63
-	CA      298
-	CO      48
-	CT      30
+	AZ      51
+	CA      256
+	CO      46
+	CT      27
 	DC      7
 	DE      6
-	FL      170
-	GA      101
-	GU      2
+	FL      165
+	GA      95
+	GU      1
 	HI      12
 	IA      34
-	ID      14
-	IL      126
-	IN      85
-	KS      52
-	KY      65
-	LA      92
-	MA      57
-	MD      47
+	ID      11
+	IL      118
+	IN      75
+	KS      41
+	KY      64
+	LA      71
+	MA      55
+	MD      43
 	ME      17
-	MI      94
-	MN      50
-	MO      72
+	MI      82
+	MN      44
+	MO      70
 	MP      1
-	MS      63
-	MT      14
-	NC      86
+	MS      55
+	MT      12
+	NC      82
 	ND      8
-	NE      23
-	NH      13
-	NJ      64
-	NM      32
-	NV      22
-	NY      152
-	OH      128
-	OK      86
+	NE      18
+	NH      12
+	NJ      62
+	NM      29
+	NV      19
+	NY      143
+	OH      114
+	OK      77
 	OR      34
-	PA      150
-	PR      51
+	PA      134
+	PR      46
 	RI      11
-	SC      54
-	SD      21
-	TN      90
-	TX      315
-	UT      32
-	VA      75
+	SC      51
+	SD      16
+	TN      87
+	TX      280
+	UT      31
+	VA      73
 	VI      2
 	VT      6
-	WA      49
-	WI      66
-	WV      29
-	WY      12
+	WA      48
+	WI      63
+	WV      28
+	WY      10
+
 
 To determine the states that are models of high-quality care, I determine to calculate the percentage of hospitals in the top 50 for each state. 
 
