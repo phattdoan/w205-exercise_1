@@ -4,9 +4,9 @@ select measure_id, variance(score) var_id, count(*) count
 from care_transformed
 group by measure_id
 having count > 30;
-select h.measure_id,m.measure_name,h.var_id 
+select m.measure_id, m.measure_name, pv.var_id 
 from procedure_variability pv
 join measures m
-on h.measure_id = m.measure_id
-order by var_id desc
+on m.measure_id = m.measure_id
+order by pv.var_id desc
 limit 10;
