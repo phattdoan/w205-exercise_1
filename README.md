@@ -30,7 +30,7 @@
 	- `./load_data_lake.sh` to download CMS dataset and load necessary files into HDFS
 	- If loading fails, run this to clean the data lake before troubleshooting `./CLEAN_load_data_lake.sh`
 	
-. Stop hadoop and postgres
+. Shut down procedures:
 	. Stop hive 
 		- ps -ef|grep metastore
 		- kill <id>
@@ -230,9 +230,6 @@
 
 
 ## Phase 2: 
-### EDA questions
-- What is the distribution of "Hospital overall rating" in the hospital.csv?
-
 ### Exploring the dataset: 
 `select hospital_type, count(*) from hospitals group by hospital_type;`
 `select state, count(*) from hospitals where hospital_type like '%Acute%' 
@@ -254,10 +251,10 @@ group by state order by state;`
 For this review purpose, I would focus on Acute Care hospitals with emergency services and meet CM<S criteria since childrens and critical access hospitals serve different purposes and certainly would require different measuring metrics./
 
 ### transforming data lake
-`source hospital_info.sql`
+`source transforming/hospital_info.sql`
 . hospital_info: contain information and CMS-aggregated measures for acute care hospitals with emergency services only, excluding childrens and critical access hospitals.
 
-`source hospital_compare.sql`
+`source transforming/hospital_compare.sql`
 . hospital_compare:
 	provider_id,
 	hospital_overall_rating,
@@ -269,7 +266,7 @@ For this review purpose, I would focus on Acute Care hospitals with emergency se
 	timeliness_of_care_national_comparison,
 	efficient_use_of_medical_imaging_national_comparison
 
-`source hospital_baseline.sql`
+`source transforming/hospital_baseline.sql`
 . hospital_baseline: for each CMS measure and its comparison to national, each comparison can be 'above', 'below' or 'no different than the national average'. Using this, I transform the comparison into a score, with 3 for 'above national average', 1 for 'below national average', and 2 for 'no different' or null variable. This allows me to aggregate the score later into one combined metric for measuring the performance of each hospital.
 	provider_id,
 	mortality_score,
@@ -280,7 +277,7 @@ For this review purpose, I would focus on Acute Care hospitals with emergency se
 	timeliness_score,
 	efficiency_score
 
-`source states_hospital_count.sql`
+`source transforming/states_hospital_count.sql`
 . states_hospital_count: count number of hospitals per state
 	state
 	hospital_count
@@ -377,7 +374,8 @@ MO      0.071428575
 ### Question 3: Which procedures have the greatest variability between hospitals?
 Using data from care_transformed table, I estimate the variance of each procedure with measure_id grouping and score. The measures and scores are selected based on actual scores and excluded those measures with step metrics (i.e. above, below, etc.). I only inlcude measures that have more than 30 entries to avoid small sample bias.
 The top 10 procedures that have the highest variance are:
-
+`source transforming/care_transformed.sql`
+`source investigating/hospital_variability.sql`
 ED_2b	Admit Decision Time to ED Departure Time for Admitted Patients
 OP_18b	Median Time from ED Arrival to ED Departure for Discharged ED Patients
 ED_1b   Median Time from ED Arrival to ED Departure for Admitted ED Patients
@@ -390,23 +388,19 @@ OP_2	Fibrinolytic Therapy Received Within 30 Minutes of ED Arrival
 OP_20	Median Time from ED Arrival to Provider Contact for ED patients
 
 ### Question 4: Are average scores for hospital quality or procedural variability correlated with patient survey responses?
-Join transform_surveys and best_hospitals so that we can compute the correlation coefficient 
-between hospital ranking (rating) score and patients survey responses regarding nurse, doctor etc.
+`source transforming/surveys_transformed.sql`
+`source investigating/hospitals_patients_corr.sql`
+I compute the correlation coefficient between hospital score and patients survey responses using top_hospitals and hospital_baseline tables.
 
 Correlation between hospital score and survey rating:
-Nurse rating =0.5340670295160149       
-Doctor rating =0.4434510774602345     
-Staff rating =0.5186374103477489     
-Pain management=0.48148498316864735    
-Quality communication =0.450553145164991      
-Environment =0.44895231097870686       
-Quality discharge =0.44964214024464566 
-Overall hospital performance=0.563389188296042
+Nurse rating = 0.5340670295160149       
+Doctor rating = 0.4434510774602345     
+Staff rating = 0.5186374103477489     
+Pain management = 0.48148498316864735    
+Quality communication = 0.450553145164991      
+Environment = 0.44895231097870686       
+Quality discharge = 0.44964214024464566 
+Overall hospital performance = 0.563389188296042
 
-Hospital rating (by previously described method) correlate well with patients survey rating.
-In particular, staff rating and hospital rating is the highest, followed by environment rating, 
-patient rating of the hospital,doctor rating, nurse rating, pain management, pain medicine communication, 
-and quality discharge.
-
-It seems the method used to access the quality of care is well correlated with patients' assessment.
-From the correlation, it would be advised for hospitals to invest resource to staff then hospital enviroment.
+Overall, hospital score by CMS correlate somewhat with patients survey rating.
+Particularly, staff rating and hospital rating is the highest, followed by environment rating, patient rating of the hospital,doctor rating, nurse rating, pain management, pain medicine communication, and quality discharge.
